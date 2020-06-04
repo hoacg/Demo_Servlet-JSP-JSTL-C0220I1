@@ -10,13 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 @WebServlet(urlPatterns = "/customers")
 public class CustomerController extends HttpServlet {
+    private CustomerDAO customerDAO;
 
-    private CustomerDAO customerDAO = CustomerDAO.getInstance();
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        customerDAO = CustomerDAO.getInstance();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

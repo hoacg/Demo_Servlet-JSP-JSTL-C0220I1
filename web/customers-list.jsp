@@ -4,13 +4,6 @@
 
 <t:layout>
 
-    <jsp:attribute name="header">
-      <h1>Customers</h1>
-    </jsp:attribute>
-    <jsp:attribute name="footer">
-      <p id="copyright">CodeGym.vn</p>
-    </jsp:attribute>
-
     <jsp:body>
         <table class="table">
             <tr>
@@ -18,9 +11,11 @@
                 <td>Họ tên</td>
                 <td></td>
             </tr>
-            <c:forEach items="${customers}" var="customer">
+            <c:forEach items="${customers}" var="customer" varStatus="loop">
                 <tr>
-                    <td></td>
+                    <td>
+                        <c:out value="${loop.index + 1}"></c:out>
+                    </td>
                     <td>
                         <c:out value="${customer.getName()}"></c:out>
                     </td>
