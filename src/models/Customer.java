@@ -2,16 +2,14 @@ package models;
 
 public class Customer {
 
-    static int count = 0;
-
     private int id;
     private String name;
 
     public Customer() {
     }
 
-    public Customer(String name) {
-        this.id = count++;
+    public Customer(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 

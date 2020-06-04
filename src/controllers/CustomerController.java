@@ -1,6 +1,7 @@
 package controllers;
 
 import models.CustomerDAO;
+import utils.DBConnection;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,12 +14,13 @@ import java.io.PrintWriter;
 
 @WebServlet(urlPatterns = "/customers")
 public class CustomerController extends HttpServlet {
+    private DBConnection connection = DBConnection.getInstance();
     private CustomerDAO customerDAO;
 
     @Override
     public void init() throws ServletException {
         super.init();
-        customerDAO = CustomerDAO.getInstance();
+        customerDAO = new CustomerDAO(connection);
     }
 
     @Override

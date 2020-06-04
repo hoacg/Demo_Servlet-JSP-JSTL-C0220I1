@@ -1,42 +1,67 @@
 package models;
 
+import utils.DBConnection;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAO {
-    private static CustomerDAO instance;
-    List<Customer> customers = new ArrayList<>();
+    private DBConnection connection;
 
-    private CustomerDAO() {
-        customers.add(new Customer("Huân"));
-        customers.add(new Customer("Đông"));
-        customers.add(new Customer("Đoàn"));
-        customers.add(new Customer("Khuê"));
-    }
-
-    public static CustomerDAO getInstance() {
-
-        if (instance == null) {
-            instance = new CustomerDAO();
-        }
-
-        return instance;
+    public CustomerDAO(DBConnection connection) {
+        this.connection = connection;
     }
 
     public List<Customer> getCustomers() {
+
+        List<Customer> customers = new ArrayList<>();
+        String sql = "SELECT id, name FROM customers";
+
+        try {
+            Statement statement = this.connection.getConnection().createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString(2);
+
+                Customer customer = new Customer(id, name);
+                customers.add(customer);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Lỗi thực thi câu lệnh SQL");
+        }
+
         return customers;
     }
 
     public void save(String customerName) {
-        Customer customer = new Customer(customerName);
-        customers.add(customer);
+
+        String sql = "INSERT INTO customers (name) VALUES (?)";
+
+        try {
+            PreparedStatement ps = this.connection.getConnection().prepareStatement(sql);
+            ps.setString(1, customerName);
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException("Lỗi thực thi lệnh SQL Insert Into");
+        }
+
     }
 
     public void deleteById(int id) {
-        if (id >= 0 && id < customers.size() && customers.get(id) != null) {
-            customers.remove(id);
-        } else {
-            throw new RuntimeException("Không tồn tại khách hàng có id là " + id);
+        String sql = "DELETE FROM customers WHERE id = ?";
+        try {
+            PreparedStatement ps = this.connection.getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException("Lỗi thực thi lệnh SQL DELETE");
         }
     }
 }

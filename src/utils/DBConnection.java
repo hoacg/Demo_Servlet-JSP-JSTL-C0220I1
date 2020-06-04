@@ -15,9 +15,10 @@ public class DBConnection {
         String password = "123456";
 
         try {
+            Class.forName("com.mysql.jdbc.Driver");
             this.connection = DriverManager.getConnection(url, username, password);
             System.out.println("Kết nối thành công");
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
