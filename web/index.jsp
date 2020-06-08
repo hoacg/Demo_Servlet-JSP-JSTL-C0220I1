@@ -14,13 +14,14 @@
   }
 </style>
 <body>
-<form method="post" action="./gicungduoc">
-  <div class="login">
-    <h2>Login</h2>
-    <input type="text" name="axaxasd" size="30"  placeholder="fadasd" />
-    <input type="text" name="adasdasd" size="30" placeholder="dada" />
-    <input type="submit" value="Sign in"/>
-  </div>
-</form>
+Index.jsp
+<%--<form method="post" action="./gicungduoc">--%>
+<%--  <div class="login">--%>
+<%--    <h2>Login</h2>--%>
+<%--    <input type="text" name="axaxasd" size="30"  placeholder="fadasd" />--%>
+<%--    <input type="text" name="adasdasd" size="30" placeholder="dada" />--%>
+<%--    <input type="submit" value="Sign in"/>--%>
+<%--  </div>--%>
+<%--</form>--%>
 </body>
 </html>

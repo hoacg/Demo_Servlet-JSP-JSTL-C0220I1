@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -25,8 +26,21 @@ public class CustomerController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("command");
-        doAction(action, req, resp);
+        HttpSession session = req.getSession();
+        Object o = session.getAttribute("IS_LOGGINED");
+        boolean isLoggin = false;
+
+        if (o != null) {
+            isLoggin = Boolean.parseBoolean(o.toString());
+            if (isLoggin) {
+                String action = req.getParameter("command");
+                doAction(action, req, resp);
+            }
+        }
+
+        RequestDispatcher dispatcher = req.getRequestDispatcher("login.jsp");
+        dispatcher.forward(req, resp);
+
     }
 
 
