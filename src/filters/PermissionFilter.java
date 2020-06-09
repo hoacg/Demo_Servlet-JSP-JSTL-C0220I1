@@ -32,6 +32,9 @@ public class PermissionFilter implements Filter {
                 PrintWriter writer = resp.getWriter();
                 writer.write("Khong co quyen thuc hien thao tac nay!");
             }
+        } else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
         }
     }
 
